@@ -26,7 +26,7 @@ describe("ProductEditPage Component", () => {
   });
 
   afterEach(() => {
-    console.error.mockRestore();
+    vi.restoreAllMocks(); // This is the safer Vitest way!
   });
 
   const mockProductData = {
