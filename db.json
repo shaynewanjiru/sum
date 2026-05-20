@@ -1,0 +1,61 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Lipstick",
+      "price": "19.9",
+      "description": "A long-lasting lipstick that provides vibrant color and hydration for your lips.",
+      "image": "https://i.pinimg.com/736x/1d/6a/bd/1d6abd9e86a53e2e38742ff880267638.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Foundation",
+      "price": 29.99,
+      "description": "A lightweight foundation that offers buildable coverage and a natural finish for all skin types.",
+      "image": "https://i.pinimg.com/736x/1d/75/f0/1d75f063368ad108f5be2e77ed32c5ce.jpg"
+    },
+    {
+      "id": "3",
+      "name": "Mascara",
+      "price": 14.99,
+      "description": "A volumizing mascara that lengthens and defines your lashes for a dramatic look.",
+      "image": "https://i.pinimg.com/736x/fc/c5/f8/fcc5f88ced32e5fd3449dc5c322adc19.jpg"
+    },
+    {
+      "id": "4",
+      "name": "Eyeliner",
+      "price": 12.99,
+      "description": "A waterproof eyeliner that glides on smoothly and stays put all day.",
+      "image": "https://i1-e.pinimg.com/736x/43/a4/da/43a4da0f0d518433e612803a51d041ba.jpg"
+    },
+    {
+      "id": "5",
+      "name": "Blush",
+      "price": 9.99,
+      "description": "A silky blush that adds a natural flush of color to your cheeks.",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzLEnphazeQ2PFwfOMyOLjI8Z2rUfy60BF3A&s"
+    },
+    {
+      "id": "6",
+      "name": "Eyeshadow Palette",
+      "price": 24.99,
+      "description": "A versatile eyeshadow palette with a range of matte and shimmer shades for endless eye looks.",
+      "image": "https://i.pinimg.com/736x/63/92/69/639269a52b951be055b9af4b2bcda589.jpg"
+    },
+    {
+      "id": "7",
+      "name": "Highlighter",
+      "price": 19.99,
+      "description": "A radiant highlighter that gives your skin a luminous glow.",
+      "image": "https://i1-e.pinimg.com/1200x/b0/81/1d/b0811d40375fc16bb091c411f8ad1749.jpg"
+    },
+    {
+      "id": "8",
+      "name": "Setting Spray",
+      "price": 14.99,
+      "description": "A long-lasting setting spray that keeps your makeup in place all day.",
+      "image": " https://i.pinimg.com/736x/5e/7c/1d/5e7c1d750176076fcc2b96caeffd826e.jpg"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
