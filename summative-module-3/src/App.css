@@ -1,0 +1,149 @@
+:root{
+  --border: #ccc;
+  --text-h: #333;
+  --heading: 'Arial', sans-serif;
+  --mono: 'Courier New', monospace;
+  --bg-light-lavender: #e8def0;
+  
+  --accent-lilac-light: #ebd7f7;
+  --accent-lilac-mid: #cbb5df;
+  --accent-lilac-deep: #b397cc;
+ 
+}
+
+.App{
+  text-align: center;
+  background-color: var(--accent-lilac-light);
+  min-height: 100vh;
+  margin: 0;
+}
+
+.landing-page{
+  font-family: cursive;
+
+  
+
+}
+
+
+.navbar{
+  display: flex;
+  justify-content: center;
+  gap: 90px;
+  background-color: var(--bg-light-lavender);
+  
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+
+}
+
+.product-list{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  
+
+}
+
+/* product card styles */
+.product-card {
+  background: var(--bg-light-lavender);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  width: 220px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+}
+
+.product-image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.product-price {
+  font-weight: 600;
+  margin: 6px 0;
+  color: var(--text-h);
+}
+
+@media (max-width: 480px) {
+  .product-card { width: 160px; }
+  .product-image { height: 110px; }
+}
+
+.admin-form {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background: var(--bg-light-lavender);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.admin-form input,
+.admin-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.admin-form button {
+  background-color: var(--accent-lilac-deep);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-form button:hover {
+  background-color: var(--accent-lilac-mid);
+}
+
+.product-edit-page {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  background: var(--bg-light-lavender);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.product-edit-page input,
+.product-edit-page textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 8px 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-sizing: border-box;
+} 
+
+.product-edit-page button {
+  background-color: var(--accent-lilac-deep);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.product-edit-page button:hover {
+  background-color: var(--accent-lilac-mid);
+}

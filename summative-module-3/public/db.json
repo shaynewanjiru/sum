@@ -1,0 +1,60 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Lipstick",
+      "price": 19.99,
+      "description": "A long-lasting lipstick that provides vibrant color and hydration for your lips.",
+      "image": "https://i.pinimg.com/736x/1d/6a/bd/1d6abd9e86a53e2e38742ff880267638.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Foundation",
+      "price": 29.99,
+      "description": "A lightweight foundation that offers buildable coverage and a natural finish for all skin types.",
+      "image": "https://i1-e.pinimg.com/1200x/96/89/3c/96893ce2fa15f90e54ffaa478f81a1fe.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Mascara",
+      "price": 14.99,
+      "description": "A volumizing mascara that lengthens and defines your lashes for a dramatic look.",
+      "image": "https://i.pinimg.com/736x/fc/c5/f8/fcc5f88ced32e5fd3449dc5c322adc19.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Eyeshadow Palette",
+      "price": 39.99,
+      "description": "A versatile eyeshadow palette with a range of matte and shimmer shades for endless eye looks.",
+      "image": "https://i.pinimg.com/736x/63/92/69/639269a52b951be055b9af4b2bcda589.jpg"
+    },
+    {
+      "id": 5,
+      "name": "Blush",
+      "price": 24.99,
+      "description": "A silky blush that adds a natural flush of color to your cheeks for a radiant complexion.",
+      "image": "https://i.pinimg.com/736x/73/7b/8e/737b8e5b980884af6737e78fc252cc56.jpg"
+    },
+    {
+      "id": 6,
+      "name": "Highlighter",
+      "price": 22.99,
+      "description": "A luminous highlighter that gives your skin a radiant glow and enhances your features.",
+      "image": "https://i1-e.pinimg.com/1200x/b0/81/1d/b0811d40375fc16bb091c411f8ad1749.jpg"
+    },
+    {
+      "id": 7,
+      "name": "Setting Spray",
+      "price": 17.99,
+      "description": "A refreshing setting spray that locks in your makeup for all-day wear and a flawless finish.",
+      "image": "https://i.pinimg.com/736x/48/dc/fc/48dcfc9bda89be9cf769f66c7007923e.jpg"
+    },
+    {
+      "id": 8,
+      "name": "Makeup Brushes Set",
+      "price": 49.99,
+      "description": "A complete set of high-quality makeup brushes for flawless application and blending.",
+      "image": "https://i.pinimg.com/736x/15/c7/fa/15c7fab8f264945b9504469e3c9e454c.jpg"
+    }
+  ]
+}

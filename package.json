@@ -1,4 +1,11 @@
 {
+  "name": "sum-root",
+  "private": true,
+  "scripts": {
+    "dev": "cd summative-module-3 && npm run dev",
+    "build": "cd summative-module-3 && npm run build",
+    "install": "cd summative-module-3 && npm install"
+  },
   "dependencies": {
     "react-router-dom": "^6.30.3"
   }
