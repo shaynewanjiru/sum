@@ -135,12 +135,12 @@
 }
 
 .product-edit-page {
-  max-width: 400px;
+  max-width: 900px;
   margin: 20px auto;
   padding: 20px;
   background: var(--bg-light-lavender);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 6px;
 }
 .product-edit-page input,
 .product-edit-page textarea {
@@ -180,4 +180,58 @@
   border: 2px solid #e9ecef;
   border-radius: 30px; 
   transition: all 0.3s ease;
+}
+
+.add-btn {
+  margin-bottom: 1rem;
+  padding: 0.6rem 1.2rem;
+  background: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.admin-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.edit-btn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+.delete-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+
+.product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cancel-btn {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
 }

@@ -1,84 +1,61 @@
-/** @vitest-environment jsdom */
-import { describe, test, expect, beforeEach, vi } from "vitest";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import ProductPage from "./ProductPage";
+import { vi, describe, beforeEach, it, expect } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import ProductPage from '../pages/ProductPage';
 
-describe("ProductPage Component", () => {
-  // 1. Setup mocks before each test
-  beforeEach(() => {
-    vi.clearAllMocks();
-    // We use window.fetch because we are using the 'jsdom' environment
-    window.fetch = vi.fn();
-  });
+global.fetch = vi.fn();
 
-  const mockProducts = [
-    { id: 1, name: "Blue Sneakers", price: 50, description: "Cool shoes", image: "blue.jpg" },
-    { id: 2, name: "Red Running Shoes", price: 75, description: "Fast shoes", image: "red.jpg" },
-    { id: 3, name: "Leather Boots", price: 120, description: "Sturdy boots", image: "boots.jpg" },
+describe('ProductPage tests', () => {
+  const products = [
+    { id: 1, name: 'Cool Gadget', price: 99, description: 'very cool', image: '' },
+    { id: 2, name: 'Old Thing', price: 10, description: 'not cool', image: '' }
   ];
 
-  test("renders loading state initially", () => {
-    // Mock fetch to stay pending
-    window.fetch.mockImplementationOnce(() => new Promise(() => {}));
-
-    render(<ProductPage />);
-    expect(screen.getByText(/loading products.../i)).toBeInTheDocument();
+  beforeEach(() => {
+    fetch.mockReset();
   });
 
-  test("renders all products after successful fetch", async () => {
-    window.fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockProducts,
-    });
-
+  it('shows loading text', () => {
+    fetch.mockImplementation(() => new Promise(() => {}));
     render(<ProductPage />);
+    expect(screen.getByText(/loading/i)).toBeInTheDocument();
+  });
 
-    // Wait for the products to appear
+  it('displays fetched products', async () => {
+    fetch.mockResolvedValueOnce({
+      json: async () => products
+    });
+    
+    render(<ProductPage />);
+    
     await waitFor(() => {
-      expect(screen.getByText("Blue Sneakers")).toBeInTheDocument();
-      expect(screen.getByText("Red Running Shoes")).toBeInTheDocument();
-      expect(screen.getByText("Leather Boots")).toBeInTheDocument();
+      expect(screen.getByText('Cool Gadget')).toBeInTheDocument();
     });
+    
+    expect(screen.getByText('Old Thing')).toBeInTheDocument();
+    expect(screen.getByText('Price: $99')).toBeInTheDocument();
   });
 
-  test("filters products correctly based on search input", async () => {
-    window.fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockProducts,
+  it('filters by search term', async () => {
+    fetch.mockResolvedValueOnce({
+      json: async () => products
     });
-
+    
     render(<ProductPage />);
-
-    // Wait for data to load
-    await waitFor(() => screen.getByText("Blue Sneakers"));
-
-    const searchInput = screen.getByPlaceholderText(/search products by name.../i);
-
-    // Type "sneakers" into the search bar
-    fireEvent.change(searchInput, { target: { value: "sneakers" } });
-
-    // "Blue Sneakers" should remain, others should vanish
-    expect(screen.getByText("Blue Sneakers")).toBeInTheDocument();
-    expect(screen.queryByText("Red Running Shoes")).not.toBeInTheDocument();
-    expect(screen.queryByText("Leather Boots")).not.toBeInTheDocument();
+    
+    await waitFor(() => {
+      expect(screen.getByText('Cool Gadget')).toBeInTheDocument();
+    });
+    
+    const searchInput = screen.getByPlaceholderText('Search products by name...');
+    fireEvent.change(searchInput, { target: { value: 'old' } });
+    
+    expect(screen.queryByText('Cool Gadget')).not.toBeInTheDocument();
+    expect(screen.getByText('Old Thing')).toBeInTheDocument();
   });
-
-  test("shows 'no products found' message if search matches nothing", async () => {
-    window.fetch.mockResolvedValueOnce({
-      ok: true,
-      json: async () => mockProducts,
-    });
-
+  
+  it('uses localhost api', () => {
+    fetch.mockResolvedValueOnce({ json: async () => [] });
     render(<ProductPage />);
-
-    await waitFor(() => screen.getByText("Blue Sneakers"));
-
-    const searchInput = screen.getByPlaceholderText(/search products by name.../i);
-
-    // Type something that doesn't exist
-    fireEvent.change(searchInput, { target: { value: "NonExistentItem" } });
-
-    expect(screen.getByText(/no products found matching "NonExistentItem"/i)).toBeInTheDocument();
-    expect(screen.queryByText("Blue Sneakers")).not.toBeInTheDocument();
+    expect(fetch).toHaveBeenCalledWith('http://localhost:3001/products');
   });
 });

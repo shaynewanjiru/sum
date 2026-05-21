@@ -1,110 +1,238 @@
-import { useEffect, useState, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 
-const ProductEditPage = () => {
-  const { id } = useParams();
-  const navigate = useNavigate();
+const API_URL = "http://localhost:3001/products";
+
+export default function ProductEditPage() {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
+
   
-  
-  const [product, setProduct] = useState({
-    id: id || "", 
+  const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null); // null = adding new, set = editing existing
+
+  const [formData, setFormData] = useState({
     name: "",
     price: "",
     description: "",
     image: ""
   });
-  
-  
-  const [loading, setLoading] = useState(false);
-  const inputRef = useRef(null);
 
- 
+  // Fetch all products
   useEffect(() => {
-    if (!loading && inputRef.current) {
-      inputRef.current.focus();
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = () => {
+    setLoading(true);
+    fetch(API_URL)
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching products:", err);
+        setLoading(false);
+      });
+  };
+
+  const filteredProducts = products.filter((product) =>
+    product.name?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleFormChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const resetForm = () => {
+    setFormData({ name: "", price: "", description: "", image: "" });
+    setEditingId(null);
+    setShowForm(false);
+  };
+
+  const handleAddNew = () => {
+    resetForm();
+    setShowForm(true);
+  };
+
+  const handleEdit = (product) => {
+    setFormData({
+      name: product.name || "",
+      price: product.price || "",
+      description: product.description || "",
+      image: product.image || ""
+    });
+    setEditingId(product.id);
+    setShowForm(true);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (editingId) {
+      fetch(`${API_URL}/${editingId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, id: editingId })
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Update failed");
+          return res.json();
+        })
+        .then(() => {
+          alert("Product updated successfully!");
+          fetchProducts();
+          resetForm();
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Could not update product. Is json-server running?");
+        });
+    } else {
+      // CREATE new product
+      fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          id: Date.now().toString()
+        })
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("Create failed");
+          return res.json();
+        })
+        .then(() => {
+          alert("Product added successfully!");
+          fetchProducts();
+          resetForm();
+        })
+        .catch((err) => {
+          console.error(err);
+          alert("Could not add product. Is json-server running?");
+        });
     }
-  }, [loading]);
-
-  const handleChange = (event) => {
-    setProduct({
-      ...product,
-      [event.target.name]: event.target.value
-    });
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    
-    
-    fetch(`http://localhost:3001/products/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(product)
-    })
-    .then((res) => {
-      if (!res.ok) throw new Error("Server failed to update");
-      return res.json();
-    })
-    .then(() => {
-      alert("Product updated successfully!");
-      navigate("/products"); 
-    })
-    .catch((err) => {
-      console.error("Error saving updates:", err);
-      alert("Could not save changes. Is json-server running?");
-    });
+  const handleDelete = (id) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
+
+    fetch(`${API_URL}/${id}`, { method: "DELETE" })
+      .then((res) => {
+        if (!res.ok) throw new Error("Delete failed");
+        return res.json();
+      })
+      .then(() => {
+        alert("Product deleted successfully!");
+        fetchProducts();
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Could not delete product.");
+      });
   };
 
-  if (loading) return <p>Loading product...</p>;
+  if (loading) return <p>Loading products...</p>;
 
   return (
     <div className="product-edit-page">
-      <h1>Edit Product #{id}</h1>
-      <form onSubmit={handleSubmit}>
+      <h1>Manage Products</h1>
+
+      <button onClick={handleAddNew} className="add-btn">
+         Add New Product
+      </button>
+
+      {/* Add/Edit Form */}
+      {showForm && (
+        <form onSubmit={handleSubmit} className="product-form">
+          <h2>{editingId ? "Edit Product" : "Add New Product"}</h2>
+          <input
+            type="text"
+            name="name"
+            placeholder="Product Name"
+            value={formData.name}
+            onChange={handleFormChange}
+            required
+          />
+          <input
+            type="number"
+            name="price"
+            placeholder="Product Price"
+            value={formData.price}
+            onChange={handleFormChange}
+            required
+          />
+          <input
+            type="text"
+            name="image"
+            placeholder="Product Image URL"
+            value={formData.image}
+            onChange={handleFormChange}
+          />
+          <textarea
+            name="description"
+            placeholder="Product Description"
+            value={formData.description}
+            onChange={handleFormChange}
+          />
+          <div className="form-buttons">
+            <button type="submit">
+              {editingId ? "Save Changes" : "Add Product"}
+            </button>
+            <button type="button" onClick={resetForm} className="cancel-btn">
+              Cancel
+            </button>
+          </div>
+        </form>
+      )}
+
+      {/* Search */}
+      <div className="search-container">
         <input
-          ref={inputRef}
-          className="Product-Name"
           type="text"
-          name="name"
-          placeholder="New Product Name"
-          value={product.name}
-          onChange={handleChange}
-          required
+          placeholder="Search products by name..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
         />
+      </div>
 
-        <input
-          className="ProductPrice"
-          type="number"
-          name="price"
-          placeholder="New Product Price"
-          value={product.price}
-          onChange={handleChange}
-          required
-        />
+      {/* Product List */}
+      <div className="product-list">
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <div key={product.id} className="product-card">
+              <h2>{product.name}</h2>
+              {product.image && (
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="product-image"
+                />
+              )}
+              <p>Price: ${product.price}</p>
+              <p>{product.description}</p>
 
-        <input
-          className="ProductImage"
-          type="text"
-          name="image"
-          placeholder="New Product Image URL"
-          value={product.image}
-          onChange={handleChange}
-        />
-
-        <textarea
-          className="description"
-          name="description"
-          placeholder="New Product Description"
-          value={product.description}
-          onChange={handleChange}
-        />
-
-        <button type="submit">Overwrite Changes</button>
-      </form>
+              {/* Admin-only buttons */}
+              <div className="admin-buttons">
+                <button onClick={() => handleEdit(product)} className="edit-btn">
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(product.id)}
+                  className="delete-btn"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No products found matching "{searchTerm}"</p>
+        )}
+      </div>
     </div>
   );
-};
-
-export default ProductEditPage;
+}

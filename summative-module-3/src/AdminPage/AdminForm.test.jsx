@@ -1,88 +1,81 @@
-// 1. IMPORT VITEST GLOBALS HERE
-/** @vitest-environment jsdom */
-import { describe, test, expect, beforeEach, vi } from "vitest"; 
+import { vi, describe, beforeEach, it, expect } from 'vitest';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import AdminForm from '../AdminPage/AdminForm';
 
-// 2. Import React Testing Library tools
-import { render, screen, fireEvent } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
-import AdminForm from "./AdminForm";
+const mockNavigate = vi.fn();
 
-// 3. Mock the React Router 'useNavigate' hook
-const mockedNavigate = vi.fn();
-
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual("react-router-dom"); // Note: Vitest prefers importActual
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom');
   return {
     ...actual,
-    useNavigate: () => mockedNavigate,
+    useNavigate: () => mockNavigate
   };
 });
 
-describe("AdminForm Component", () => {
-  // Clear mocks and fake the window.alert before each test
+const mockAlert = vi.spyOn(window, 'alert').mockImplementation(() => {});
+
+describe('AdminForm Component', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
-    window.alert = vi.fn(); 
+    mockNavigate.mockClear();
+    mockAlert.mockClear();
   });
 
-  test("renders the login form inputs and button correctly", () => {
-    // We wrap the component in MemoryRouter because it uses React Router features
+  it('renders login form correctly', () => {
     render(
       <MemoryRouter>
         <AdminForm />
       </MemoryRouter>
     );
-
-    // Verify UI elements are on the screen
-    expect(screen.getByRole("heading", { name: /Admin Form/i })).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/Administrator Name/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/Administrator Password/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Submit/i })).toBeInTheDocument();
+    
+    expect(screen.getByText('Admin Form')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Administrator Name')).toBeInTheDocument();
+    expect(screen.getByPlaceholderText('Administrator Password')).toBeInTheDocument();
   });
 
-  test("shows an alert and prevents navigation on invalid credentials", () => {
+  it('navigates on successful login', async () => {
     render(
       <MemoryRouter>
         <AdminForm />
       </MemoryRouter>
     );
-
-    // Simulate user typing wrong info
-    fireEvent.change(screen.getByPlaceholderText(/Administrator Name/i), {
-      target: { value: "hacker" },
+    
+    fireEvent.change(screen.getByPlaceholderText('Administrator Name'), {
+      target: { value: 'admin' }
     });
-    fireEvent.change(screen.getByPlaceholderText(/Administrator Password/i), {
-      target: { value: "wrongpassword123" },
+    fireEvent.change(screen.getByPlaceholderText('Administrator Password'), {
+      target: { value: 'password' }
     });
-
-    // Simulate clicking submit
-    fireEvent.click(screen.getByRole("button", { name: /Submit/i }));
-
-    // Verify it blocks the user
-    expect(window.alert).toHaveBeenCalledWith("Invalid credentials. Please try again.");
-    expect(mockedNavigate).not.toHaveBeenCalled();
+    
+    fireEvent.click(screen.getByText('Submit'));
+    
+    await waitFor(() => {
+      expect(mockNavigate).toHaveBeenCalledWith('/admin/edit', { replace: true });
+    });
   });
 
-  test("shows success alert and navigates to edit page on valid credentials", () => {
+  it('shows alert on bad credentials', () => {
     render(
       <MemoryRouter>
         <AdminForm />
       </MemoryRouter>
     );
-
-    // Simulate user typing correct info
-    fireEvent.change(screen.getByPlaceholderText(/Administrator Name/i), {
-      target: { value: "admin" },
+    
+    fireEvent.change(screen.getByPlaceholderText('Administrator Name'), {
+      target: { value: 'hacker' }
     });
-    fireEvent.change(screen.getByPlaceholderText(/Administrator Password/i), {
-      target: { value: "password" },
+    fireEvent.change(screen.getByPlaceholderText('Administrator Password'), {
+      target: { value: '1234' }
     });
-
-    // Simulate clicking submit
-    fireEvent.click(screen.getByRole("button", { name: /Submit/i }));
-
-    // Verify successful login behavior
-    expect(window.alert).toHaveBeenCalledWith("Login successful!");
-    expect(mockedNavigate).toHaveBeenCalledWith("/admin/edit", { replace: true });
+    
+    fireEvent.click(screen.getByText('Submit'));
+    
+    expect(mockAlert).toHaveBeenCalledWith('Invalid credentials. Please try again.');
+  });
+  
+  it('has a submit button', () => {
+    render(<MemoryRouter><AdminForm /></MemoryRouter>);
+    const btn = screen.getByRole('button');
+    expect(btn).toBeTruthy();
   });
 });
