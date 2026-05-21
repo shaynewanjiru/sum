@@ -83,6 +83,6 @@ describe("AdminForm Component", () => {
 
     // Verify successful login behavior
     expect(window.alert).toHaveBeenCalledWith("Login successful!");
-    expect(mockedNavigate).toHaveBeenCalledWith("/admin/edit/1", { replace: true });
+    expect(mockedNavigate).toHaveBeenCalledWith("/admin/edit", { replace: true });
   });
 });

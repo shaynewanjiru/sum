@@ -141,7 +141,7 @@ describe("ProductEditPage Component", () => {
 
     // Verify fetch was called with PUT and correct data
     await waitFor(() => {
-      expect(window.fetch).toHaveBeenCalledWith("http://localhost:3000/products/1", {
+      expect(window.fetch).toHaveBeenCalledWith("http://localhost:3000/products", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(mockProductData),

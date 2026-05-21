@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'
+
 
 export default function ProductPage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate()
 
   useEffect(() => {
-    fetch("http://localhost:3000/products")
+    fetch("http://localhost:3001/products")
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched data:", data);
@@ -52,7 +55,11 @@ export default function ProductPage() {
               )}
               <p>Price: ${product.price}</p>
               <p>{product.description}</p>
+            
+            
+              
             </div>
+
           ))
         ) : (
           

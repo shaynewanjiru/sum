@@ -1,0 +1,76 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "price": "$30",
+      "name": "Matte Liquid Lipstick",
+      "description": "A long-wearing, high-pigment liquid lipstick that dries down to a smooth matte finish.",
+      "image": "https://i1-e.pinimg.com/736x/84/c3/a1/84c3a16c6145517862bbd64b397d7757.jpg"
+      
+    },
+    {
+      "id": "2",
+      "price": "$40",
+      "name": "Hydrating Foundation",
+      "description": "Medium-coverage, buildable foundation that delivers a natural, dewy glow all day.",
+      "image": "https://i.pinimg.com/736x/1d/75/f0/1d75f063368ad108f5be2e77ed32c5ce.jpg"
+    },
+    {
+      "id": "3",
+      "price": "$150",
+      "name": "Volumizing Mascara",
+      "description": "An intense black mascara with a custom brush that lifts, lengthens, and volumizes lashes.",
+      "image": "https://i.pinimg.com/736x/a9/1f/0f/a91f0fc5cafb82e46a93be77abc29ab7.jpg"
+    },
+    {
+      "id": "4",
+      "price": "$70",
+      "name": "Radiant Powder Blush",
+      "description": "A silky, lightweight powder blush that adds a healthy, natural flush of color to the cheeks.",
+      "image": "https://i1-e.pinimg.com/736x/1d/ff/9c/1dff9c3f7bfa25e1c5c399faa58dc8ee.jpg"
+    },
+    {
+      "id": "5",
+      "price": "$90",
+      "name": "Eyeshadow Palette",
+      "description": "A 12-shade palette featuring versatile warm matte and shimmering metallic tones.",
+      "image": "https://i.pinimg.com/736x/63/92/69/639269a52b951be055b9af4b2bcda589.jpg"
+    },
+    {
+      "id": "6",
+      "price": "$100",
+      "name": "Translucent Setting Powder",
+      "description": "A lightweight, micro-milled powder that locks in makeup and absorbs excess oil for a soft-focus finish.",
+      "image": "https://i1-e.pinimg.com/1200x/09/43/6c/09436c1513f428cefef7816f9a1ac5b3.jpg"
+    },
+    {
+      "id": "7",
+      "price": "$50",
+      "name": "Illuminating Highlighter",
+      "description": "A buttery powder highlighter that catches the light to deliver a high-shine, multidimensional glow.",
+      "image": "https://i1-e.pinimg.com/1200x/b0/81/1d/b0811d40375fc16bb091c411f8ad1749.jpg"
+    },
+    {
+      "id": "8",
+      "price": "$10",
+      "name": "Liquid Gel Eyeliner",
+      "description": "An ultra-black, waterproof liquid liner with a precise brush tip for creating perfect wing extensions.",
+      "image": "https://i.pinimg.com/736x/92/fe/82/92fe820fc776b81e2d7ef505914fa624.jpg"
+    },
+    {
+      "id": "9",
+      "price": "$90",
+      "name": "Hydrating Lip Oil",
+      "description": "A non-sticky, nutrient-rich oil treatment that combines high-shine gloss with intense lip conditioning.",
+      "image": "https://i1-e.pinimg.com/736x/b6/4f/b7/b64fb7200811443eb00954c67a38c65a.jpg"
+    },
+    {
+      "id": "10",
+      "price": "$100",
+      "name": "Tinted Brow Wax",
+      "description": "A flexible, long-hold gel wax that shapes, tints, and grooms brows into place all day long.",
+      "image": "https://i1-e.pinimg.com/736x/b0/be/eb/b0beeb35ed8b62b7ef6408c664c904e1.jpg"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

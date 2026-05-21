@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
-
 function AdminForm () {
   const [admin, setAdmin] = useState("");
   const [password, setPassword] = useState("");
@@ -11,7 +9,6 @@ function AdminForm () {
   const adminCredentials={
    admin : "admin",
    password : "password"
-
   }
 
   function handleSubmit(event) {
@@ -19,7 +16,7 @@ function AdminForm () {
 
     if (admin === "admin" && password === "password") {
       alert("Login successful!");
-      navigate("/admin/edit/1", {replace: true});
+      navigate("/admin/edit", {replace: true});
     } else {
       alert("Invalid credentials. Please try again.");
     }
@@ -28,11 +25,7 @@ function AdminForm () {
     setPassword("");
   }
 
-
-  
-
   return (
-    
     <div className="admin-form">
       <h1>Admin Form</h1>
       <form onSubmit={handleSubmit}>
@@ -50,4 +43,5 @@ function AdminForm () {
     </div>
   );
 }
-export default AdminForm
+
+export default AdminForm;

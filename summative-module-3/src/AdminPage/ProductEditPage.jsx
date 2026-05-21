@@ -4,36 +4,22 @@ import { useParams, useNavigate } from "react-router-dom";
 const ProductEditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  
+  
   const [product, setProduct] = useState({
-    id: "",
+    id: id || "", 
     name: "",
     price: "",
     description: "",
     image: ""
   });
-  const [loading, setLoading] = useState(true);
+  
+  
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
 
+ 
   useEffect(() => {
-    if (id) {
-      fetch(`http://localhost:3000/products/${id}`)
-        .then((res) => {
-          if (!res.ok) throw new Error("Not found");
-        return res.json();
-      })
-      .then((data) => {
-          setProduct(data);
-          setLoading(false);
-        })
-        .catch((err) => {
-          console.error("Error loading product:", err);
-          alert("Product not found");
-          navigate("/admin"); 
-        });
-    }
-  }, [id, navigate]);
-
- useEffect(() => {
     if (!loading && inputRef.current) {
       inputRef.current.focus();
     }
@@ -50,7 +36,7 @@ const ProductEditPage = () => {
     event.preventDefault();
     
     
-    fetch(`http://localhost:3000/products/${id}`, {
+    fetch(`http://localhost:3001/products/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -75,14 +61,14 @@ const ProductEditPage = () => {
 
   return (
     <div className="product-edit-page">
-      <h1>Edit Product</h1>
+      <h1>Edit Product #{id}</h1>
       <form onSubmit={handleSubmit}>
         <input
           ref={inputRef}
           className="Product-Name"
           type="text"
           name="name"
-          placeholder="Product Name"
+          placeholder="New Product Name"
           value={product.name}
           onChange={handleChange}
           required
@@ -92,7 +78,7 @@ const ProductEditPage = () => {
           className="ProductPrice"
           type="number"
           name="price"
-          placeholder="Product Price"
+          placeholder="New Product Price"
           value={product.price}
           onChange={handleChange}
           required
@@ -102,7 +88,7 @@ const ProductEditPage = () => {
           className="ProductImage"
           type="text"
           name="image"
-          placeholder="Product Image URL"
+          placeholder="New Product Image URL"
           value={product.image}
           onChange={handleChange}
         />
@@ -110,12 +96,12 @@ const ProductEditPage = () => {
         <textarea
           className="description"
           name="description"
-          placeholder="Product Description"
+          placeholder="New Product Description"
           value={product.description}
           onChange={handleChange}
         />
 
-        <button type="submit">Save Changes</button>
+        <button type="submit">Overwrite Changes</button>
       </form>
     </div>
   );
