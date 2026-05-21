@@ -1,4 +1,5 @@
 // 1. IMPORT VITEST GLOBALS HERE
+/** @vitest-environment jsdom */
 import { describe, test, expect, beforeEach, vi } from "vitest"; 
 
 // 2. Import React Testing Library tools
